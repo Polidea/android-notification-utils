@@ -126,9 +126,6 @@
 			<packageset dir="src" defaultexcludes="yes">
 				<include name="**" />
 			</packageset>
-			<packageset dir="${android.library.reference.1}/src" defaultexcludes="yes">
-				<include name="**" />
-			</packageset>
 			<doctitle>
 				<![CDATA[<h1>AR Lib</h1>]]>
 			</doctitle>
