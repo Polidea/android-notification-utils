@@ -31,7 +31,7 @@ public class OrientationCenter {
     private final float[] geomagValues = new float[3];
     private final float[] devR = new float[16];
     private final float[] camR = new float[16];
-    private final float[] I = new float[16];
+    private final float[] inclinationMatrix = new float[16];
     private final float[] lastOrientation = new float[3];
     private boolean loopReady = false;
     private boolean calibrationRequestEmited = false;
@@ -84,8 +84,8 @@ public class OrientationCenter {
             if (accelValues != null && geomagValues != null && loopReady) {
                 loopReady = false;
 
-                SensorManager.getRotationMatrix(devR, I, accelValues,
-                        geomagValues);
+                SensorManager.getRotationMatrix(devR, inclinationMatrix,
+                        accelValues, geomagValues);
                 SensorManager.remapCoordinateSystem(devR, SensorManager.AXIS_Z,
                         SensorManager.AXIS_MINUS_X, camR);
                 SensorManager.getOrientation(camR, lastOrientation);
@@ -110,8 +110,12 @@ public class OrientationCenter {
     private final NotificationCenter notificationCenter;
 
     /**
+     * Creates the center.
+     * 
      * @param context
+     *            context for the center.
      * @param notificationCenter
+     *            notification center used.
      */
     public OrientationCenter(final Context context,
             final NotificationCenter notificationCenter) {
@@ -170,6 +174,10 @@ public class OrientationCenter {
         return roll.get();
     }
 
+    /**
+     * Notified when orientation changes.
+     * 
+     */
     public static class OrientationUpdateNotification implements Notification {
         private final float azimuth;
         private final float pitch;
@@ -195,6 +203,10 @@ public class OrientationCenter {
         }
     }
 
+    /**
+     * Notified when orientation accuracy changed.
+     * 
+     */
     public static class OrientationAccuracyNotification implements Notification {
         private final boolean sufficient;
 
@@ -237,13 +249,14 @@ public class OrientationCenter {
             this.decay = decay;
         }
 
-        public boolean push(float value) {
-            if (oldValue - value >= Math.PI) {
-                value += 2 * Math.PI;
-            } else if (oldValue - value <= -Math.PI) {
-                value -= 2 * Math.PI;
+        public boolean push(final float val) {
+            float newValue = val;
+            if (oldValue - newValue >= Math.PI) {
+                newValue += 2 * Math.PI;
+            } else if (oldValue - newValue <= -Math.PI) {
+                newValue -= 2 * Math.PI;
             }
-            final float diff = value - oldValue;
+            final float diff = newValue - oldValue;
             oldValue += function(diff);
             if (oldValue >= Math.PI) {
                 oldValue -= 2 * Math.PI;

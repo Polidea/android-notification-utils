@@ -30,17 +30,33 @@ import android.util.Log;
  */
 public class LocationCenter {
 
+    /**
+     * Notified when provider is disabled.
+     * 
+     */
     public static class LocationProviderDisabledNotification implements
             Notification {
     }
 
+    /**
+     * Notified when provider is enabled.
+     * 
+     */
     public static class LocationProviderEnabledNotification implements
             Notification {
     }
 
+    /**
+     * Notified when timeout occurs on receiving notification.
+     * 
+     */
     public static class LocationTimeoutNotification implements Notification {
     }
 
+    /**
+     * Notified when location changed.
+     * 
+     */
     public static class LocationChangedNotification implements Notification {
         private final Location location;
 
@@ -55,9 +71,18 @@ public class LocationCenter {
 
     private static final String TAG = LocationCenter.class.getSimpleName();
 
-    final static public int SOURCETYPE_NET = 0;
-    final static public int SOURCETYPE_GPS = 1;
-    final static public int SOURCETYPE_ANY = 2;
+    /**
+     * Network provider.
+     */
+    public static final int SOURCETYPE_NET = 0;
+    /**
+     * GPS provider.
+     */
+    public static final int SOURCETYPE_GPS = 1;
+    /**
+     * Any provider.
+     */
+    public static final int SOURCETYPE_ANY = 2;
 
     private static final int LOCATION_UPDATE_TIMEOUT = 1125;
 
@@ -263,6 +288,7 @@ public class LocationCenter {
      * in onPause of activity using it.
      * 
      * @param type
+     *            type of the provider
      */
     public void stopCollecting(final int type) {
         Log.i(TAG, "stopCollecting: " + type);

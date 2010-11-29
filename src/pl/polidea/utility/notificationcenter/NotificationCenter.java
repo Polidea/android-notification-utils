@@ -29,7 +29,7 @@ public class NotificationCenter {
     }
 
     /**
-     * Get all listeners of the type specified
+     * Get all listeners of the type specified.
      * 
      * @param <T>
      *            generic
@@ -129,6 +129,6 @@ public class NotificationCenter {
      * @param <T>
      */
     public interface NotificationListener<T> {
-        public void notificationReceived(T notification);
+        void notificationReceived(T notification);
     }
 }
