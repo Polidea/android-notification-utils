@@ -91,9 +91,9 @@ public class LocationCenter {
     private Location lastLocationGPS = null;
     private Location lastLocationNet = null;
     private Location bestLocationYet = null;
-    private volatile boolean gpsProviderEnabled;
-    private volatile boolean networkProviderEnabled;
-    private volatile boolean forceNextChange = false;
+    private boolean gpsProviderEnabled;
+    private boolean networkProviderEnabled;
+    private boolean forceNextChange = false;
 
     private final NotificationCenter notificationCenter;
 
@@ -142,6 +142,7 @@ public class LocationCenter {
         @Override
         public void onStatusChanged(final String provider, final int status,
                 final Bundle extras) {
+            // do nothing
         }
     };
 
@@ -178,6 +179,7 @@ public class LocationCenter {
         @Override
         public void onStatusChanged(final String provider, final int status,
                 final Bundle extras) {
+            // do nothing
         }
     };
 
@@ -201,8 +203,9 @@ public class LocationCenter {
             return lastLocationNet;
         case SOURCETYPE_GPS:
             return lastLocationGPS;
-        default:
         case SOURCETYPE_ANY:
+            return getBest();
+        default:
             return getBest();
         }
     }
@@ -224,8 +227,10 @@ public class LocationCenter {
                 return providers.contains(LocationManager.NETWORK_PROVIDER);
             case SOURCETYPE_GPS:
                 return providers.contains(LocationManager.GPS_PROVIDER);
-            default:
             case SOURCETYPE_ANY:
+                return providers.contains(LocationManager.NETWORK_PROVIDER)
+                        || providers.contains(LocationManager.GPS_PROVIDER);
+            default:
                 return providers.contains(LocationManager.NETWORK_PROVIDER)
                         || providers.contains(LocationManager.GPS_PROVIDER);
             }
@@ -258,18 +263,24 @@ public class LocationCenter {
             mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
                     minDistance, listenerGPS);
             break;
-        default:
         case SOURCETYPE_ANY:
-            if (isProviderSupported(SOURCETYPE_NET)) {
-                mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        minTime, minDistance, listenerNet);
-            }
-            if (isProviderSupported(SOURCETYPE_GPS)) {
-                mgr.requestLocationUpdates(
-                        android.location.LocationManager.GPS_PROVIDER, minTime,
-                        minDistance, listenerGPS);
-            }
+            startCollectingAny(minTime, minDistance, mgr);
             break;
+        default:
+            startCollectingAny(minTime, minDistance, mgr);
+        }
+    }
+
+    private void startCollectingAny(final long minTime,
+            final float minDistance, final LocationManager mgr) {
+        if (isProviderSupported(SOURCETYPE_NET)) {
+            mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    minTime, minDistance, listenerNet);
+        }
+        if (isProviderSupported(SOURCETYPE_GPS)) {
+            mgr.requestLocationUpdates(
+                    android.location.LocationManager.GPS_PROVIDER, minTime,
+                    minDistance, listenerGPS);
         }
     }
 
@@ -301,8 +312,11 @@ public class LocationCenter {
         case SOURCETYPE_GPS:
             mgr.removeUpdates(listenerGPS);
             break;
-        default:
         case SOURCETYPE_ANY:
+            mgr.removeUpdates(listenerNet);
+            mgr.removeUpdates(listenerGPS);
+            break;
+        default:
             mgr.removeUpdates(listenerNet);
             mgr.removeUpdates(listenerGPS);
             break;

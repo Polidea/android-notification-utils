@@ -18,11 +18,11 @@ import android.os.Handler;
  * 
  */
 public class NotificationCenter {
-    private final Handler handler;
+    private final transient Handler handler;
 
     // NOTE: Here Object is needed. See Joshua Blosh's typesafe heterogeneous
     // container pattern (Item 29) Effective Java 2nd Edition
-    private final Map<Class< ? extends Notification>, Object> listenerMap = new HashMap<Class< ? extends Notification>, Object>();
+    private final transient Map<Class< ? extends Notification>, Object> listenerMap = new HashMap<Class< ? extends Notification>, Object>();
 
     public NotificationCenter() {
         handler = new Handler();
@@ -37,7 +37,7 @@ public class NotificationCenter {
      *            type
      * @return list of listeners
      */
-    public synchronized <T extends Notification> List<NotificationListener<T>> getListeners(
+    public synchronized <T extends Notification> List<NotificationListener<T>> getListeners( // NOPMD
             final Class<T> notificationType) {
         final List<NotificationListener<T>> list = internalGetListeners(notificationType);
         if (list == null) {
@@ -69,8 +69,8 @@ public class NotificationCenter {
      * @param listener
      *            listener to register
      */
-    public synchronized <T extends Notification> void registerListener(
-            final Class<T> notificationType,
+    public synchronized <T extends Notification> // NOPMD
+    void registerListener(final Class<T> notificationType,
             final NotificationListener<T> listener) {
         if (!listenerMap.containsKey(notificationType)) {
             listenerMap.put(notificationType,
@@ -93,8 +93,8 @@ public class NotificationCenter {
      * @param listener
      *            listener to register
      */
-    public synchronized <T extends Notification> void unregisterListener(
-            final Class<T> notificationType,
+    public synchronized <T extends Notification> // NOPMD
+    void unregisterListener(final Class<T> notificationType,
             final NotificationListener<T> listener) {
         final List<NotificationListener<T>> list = internalGetListeners(notificationType);
         list.remove(listener);
@@ -111,7 +111,7 @@ public class NotificationCenter {
      * @param notification
      *            notification to send.
      */
-    public synchronized <T extends Notification> void emitNotification(
+    public synchronized <T extends Notification> void emitNotification(// NOPMD
             final Class<T> clazz, final T notification) {
         handler.post(new Runnable() {
             @Override

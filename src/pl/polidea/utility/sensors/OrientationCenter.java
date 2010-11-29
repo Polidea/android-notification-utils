@@ -20,7 +20,8 @@ public class OrientationCenter {
 
     private static final String TAG = OrientationCenter.class.getSimpleName();
 
-    private static SensorManager sensorManager;
+    private static SensorManager sensorManager; // NOPMD by potiuk on 11/29/10
+                                                // 3:40 AM
     private boolean sensorRegistered = false;
 
     private final ValueProcessor azimuth = new ValueProcessor(0.6f, 0.25f);
@@ -33,7 +34,7 @@ public class OrientationCenter {
     private final float[] camR = new float[16];
     private final float[] inclinationMatrix = new float[16];
     private final float[] lastOrientation = new float[3];
-    private boolean loopReady = false;
+    private boolean loopReady = false; // NOPMD
     private boolean calibrationRequestEmited = false;
 
     private float declination = 0;
@@ -44,9 +45,7 @@ public class OrientationCenter {
         public void onAccuracyChanged(final Sensor sensor, final int accuracy) {
             if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
                 if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-                    if (calibrationRequestEmited) {
-                        // do nothing
-                    } else {
+                    if (!calibrationRequestEmited) {
                         calibrationRequestEmited = true;
                         notificationCenter.emitNotification(
                                 OrientationAccuracyNotification.class,
@@ -67,14 +66,10 @@ public class OrientationCenter {
         public void onSensorChanged(final SensorEvent event) {
             switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                for (int i = 0; i <= 2; ++i) {
-                    accelValues[i] = event.values[i];
-                }
+                System.arraycopy(event.values, 0, accelValues, 0, 3);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
-                for (int i = 0; i <= 2; ++i) {
-                    geomagValues[i] = event.values[i];
-                }
+                System.arraycopy(event.values, 0, geomagValues, 0, 3);
                 loopReady = true;
                 break;
             default:
@@ -120,7 +115,7 @@ public class OrientationCenter {
     public OrientationCenter(final Context context,
             final NotificationCenter notificationCenter) {
         sensorManager = (SensorManager) context
-                .getSystemService(Context.SENSOR_SERVICE);
+                .getSystemService(Context.SENSOR_SERVICE); // NOPMD
         this.notificationCenter = notificationCenter;
     }
 
