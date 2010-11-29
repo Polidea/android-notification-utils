@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="polidea-android-notification-utils" default="compile">
+
+	<property file="local.properties" />
+	<property file="server.properties" />
+	<property file="build.properties" />
+	<property file="default.properties" />
+	<property name="bin.dir" location="bin" />
+	<property name="output.dir" value="ota" />
+
+	<path id="android.antlibs">
+		<pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/sdklib.jar" />
+		<pathelement path="${sdk.dir}/tools/lib/androidprefs.jar" />
+	</path>
+
+	<taskdef name="setup" classname="com.android.ant.SetupTask" classpathref="android.antlibs" />
+
+    <!-- Compiles this project's .java files into .class files. -->
+    <target name="compile" depends="init, -resource-src, -aidl, -pre-compile"
+                description="Compiles project's .java files into .class files">
+        <if condition="${manifest.hasCode}">
+            <then>
+                <!-- If android rules are used for a test project, its classpath should include
+                     tested project's location -->
+                <condition property="extensible.classpath"
+                        value="${tested.project.absolute.dir}/bin/classes"
+                        else=".">
+                    <isset property="tested.project.absolute.dir" />
+                </condition>
+                <condition property="extensible.libs.classpath"
+                        value="${tested.project.absolute.dir}/libs"
+                        else="./libs">
+                    <isset property="tested.project.absolute.dir" />
+                </condition>
+                <javac encoding="utf-8" target="1.5" debug="true" extdirs=""
+                        destdir="${out.classes.absolute.dir}"
+                        bootclasspathref="android.target.classpath"
+                        verbose="${verbose}"
+                        classpath="${extensible.classpath}"
+                        classpathref="android.libraries.jars">
+                    <src path="${source.absolute.dir}" />
+                    <src path="${gen.absolute.dir}" />
+                    <src refid="android.libraries.src" />
+                    <classpath>
+                        <fileset dir="${external.libs.absolute.dir}" includes="*.jar" />
+                        <fileset dir="${extensible.libs.classpath}" includes="*.jar" />
+                    </classpath>
+                </javac>
+            </then>
+            <else>
+                <echo>hasCode = false. Skipping...</echo>
+            </else>
+        </if>
+    </target>
+
+
+	<taskdef resource="net/sourceforge/ant4hg/taskdefs/antlib.xml" classpath="build-libs/ant4hg-V0.07.jar" />
+	<target name="init">
+		<setup import="no"/>
+		<mkdir dir="ota" />
+		<mkdir dir="${out.classes.absolute.dir}" />
+	</target>
+	
+
+    <import file="${sdk.dir}/tools/ant/ant_rules_r3.xml" optional="true"/>
+
+	<target name="clean" description="cleans the project">
+		<delete dir="ota" failonerror="false" />
+		<delete dir="bin" failonerror="false" />
+	</target>
+
+	<!--ANALYSIS-->
+
+	<path id="findbugs.dir.jars">
+		<fileset dir="${findbugs.home.dir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="checkstyle.home.id">
+		<fileset dir="${checkstyle.home.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="pmd.home.id">
+		<fileset dir="${pmd.home.dir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="analysis" description="-> static code analysis">
+
+		<echo message="analysis">
+		</echo>
+
+		<taskdef resource="checkstyletask.properties" classpathref="checkstyle.home.id" />
+		<checkstyle config="analysis/checkstyle.xml" failureProperty="checkstyle.failure" failOnViolation="false" classpathref="checkstyle.home.id">
+			<classpath path="${lib-classes-folder}" />
+			<classpath path="${out.dir}" />
+			<formatter type="xml" tofile="gen/checkstyle_report.xml" />
+			<fileset dir="${source.dir}" includes="**/*.java" />
+		</checkstyle>
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.home.id" />
+		<pmd shortFilenames="false" targetjdk="1.6" rulesetfiles="analysis/pmd.xml">
+			<formatter type="xml" toFile="gen/pmd_report.xml" />
+			<fileset dir="${source.dir}" includes="**/*.java" />
+		</pmd>
+
+		<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="pmd.home.id" />
+		<cpd minimumTokenCount="100" outputFile="gen/cpd_report.xml" format="xml">
+			<fileset dir="${source.dir}" includes="**/*.java" />
+		</cpd>
+
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.dir.jars" />
+		<findbugs home="${findbugs.home.dir}" output="xml" outputFile="gen/findbugs_report.xml" excludefilter="analysis/findbugs_exclude.xml">
+			<sourcePath path="${source.dir}" />
+			<class location="${out.dir}" />
+		</findbugs>
+	</target>
+
+	<target name="javadoc" depends="compile" description="--> builds javadoc">
+		<mkdir dir="javadoc" />
+		<javadoc destdir="javadoc" author="false" version="false">
+			<packageset dir="src" defaultexcludes="yes">
+				<include name="**" />
+			</packageset>
+			<packageset dir="${android.library.reference.1}/src" defaultexcludes="yes">
+				<include name="**" />
+			</packageset>
+			<doctitle>
+				<![CDATA[<h1>AR Lib</h1>]]>
+			</doctitle>
+	</javadoc>
+</target>
+
+<!-- deployment -->
+
+<property environment="env" />
+
+<target name="Update_IMF_JAR" description="Update_IMF_JAR">
+	<get src="http://dev.polidea.pl/ext/FAF345/IMF.jar" dest="libs/IMF.jar" />
+</target>
+
+</project>
