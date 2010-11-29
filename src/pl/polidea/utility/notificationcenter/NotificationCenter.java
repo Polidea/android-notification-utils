@@ -37,8 +37,8 @@ public class NotificationCenter {
      *            type
      * @return list of listeners
      */
-    public synchronized <T extends Notification> List<NotificationListener<T>> getListeners( // NOPMD
-            final Class<T> notificationType) {
+    public synchronized <T extends Notification> // NOPMD
+    List<NotificationListener<T>> getListeners(final Class<T> notificationType) {
         final List<NotificationListener<T>> list = internalGetListeners(notificationType);
         if (list == null) {
             return Collections.emptyList();
