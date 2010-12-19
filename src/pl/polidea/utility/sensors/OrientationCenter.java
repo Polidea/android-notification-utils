@@ -20,8 +20,7 @@ public class OrientationCenter {
 
     private static final String TAG = OrientationCenter.class.getSimpleName();
 
-    private static SensorManager sensorManager; // NOPMD by potiuk on 11/29/10
-                                                // 3:40 AM
+    private final SensorManager sensorManager;
     private boolean sensorRegistered = false;
 
     private final ValueProcessor azimuth = new ValueProcessor(0.6f, 0.25f);
@@ -115,7 +114,7 @@ public class OrientationCenter {
     public OrientationCenter(final Context context,
             final NotificationCenter notificationCenter) {
         sensorManager = (SensorManager) context
-                .getSystemService(Context.SENSOR_SERVICE); // NOPMD
+                .getSystemService(Context.SENSOR_SERVICE);
         this.notificationCenter = notificationCenter;
     }
 

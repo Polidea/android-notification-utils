@@ -199,7 +199,7 @@ public class LocationCenter {
      */
     public Location getLastLocation(final int type) {
         switch (type) {
-        case SOURCETYPE_NET:
+        case SOURCETYPE_NET: // NOPMD
             return lastLocationNet;
         case SOURCETYPE_GPS:
             return lastLocationGPS;
@@ -223,7 +223,7 @@ public class LocationCenter {
         final List<String> providers = mgr.getAllProviders();
         if (providers != null) {
             switch (type) {
-            case SOURCETYPE_NET:
+            case SOURCETYPE_NET: // NOPMD
                 return providers.contains(LocationManager.NETWORK_PROVIDER);
             case SOURCETYPE_GPS:
                 return providers.contains(LocationManager.GPS_PROVIDER);
