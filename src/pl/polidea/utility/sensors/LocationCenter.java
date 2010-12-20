@@ -239,6 +239,34 @@ public class LocationCenter {
     }
 
     /**
+     * Checks if provider of the type specified is enabled.
+     * 
+     * @param type
+     *            one of SOURCETYPE_*
+     * @return true if the type is enabled (or any enabled in case ANY used)
+     */
+    public boolean isProviderEnabled(final int type) {
+        final LocationManager mgr = (LocationManager) this.context
+                .getSystemService(Context.LOCATION_SERVICE);
+        final List<String> providers = mgr.getProviders(true);
+        if (providers != null) {
+            switch (type) {
+            case SOURCETYPE_NET: // NOPMD
+                return providers.contains(LocationManager.NETWORK_PROVIDER);
+            case SOURCETYPE_GPS:
+                return providers.contains(LocationManager.GPS_PROVIDER);
+            case SOURCETYPE_ANY:
+                return providers.contains(LocationManager.NETWORK_PROVIDER)
+                        || providers.contains(LocationManager.GPS_PROVIDER);
+            default:
+                return providers.contains(LocationManager.NETWORK_PROVIDER)
+                        || providers.contains(LocationManager.GPS_PROVIDER);
+            }
+        }
+        return false;
+    }
+
+    /**
      * Start collecting location information. This should typically be run in
      * onResume of activity using it.
      * 
