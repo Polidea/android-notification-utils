@@ -12,10 +12,6 @@
             <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
-            <name>UnusedImports</name>
-            <ruleset>Type Resolution Rules</ruleset>
-        </rule>
-        <rule>
             <name>SignatureDeclareThrowsException</name>
             <ruleset>Type Resolution Rules</ruleset>
         </rule>
@@ -164,10 +160,6 @@
             <ruleset>Design Rules</ruleset>
         </rule>
         <rule>
-            <name>CompareObjectsWithEquals</name>
-            <ruleset>Design Rules</ruleset>
-        </rule>
-        <rule>
             <name>PositionLiteralsFirstInComparisons</name>
             <ruleset>Design Rules</ruleset>
         </rule>
@@ -224,16 +216,12 @@
             <ruleset>Design Rules</ruleset>
         </rule>
         <rule>
-            <name>TooFewBranchesForASwitchStatement</name>
-            <ruleset>Design Rules</ruleset>
-        </rule>
-        <rule>
             <name>AvoidCatchingThrowable</name>
             <ruleset>Strict Exception Rules</ruleset>
         </rule>
         <rule>
             <name>SignatureDeclareThrowsException</name>
-            <ruleset>Strict Exception Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>ExceptionAsFlowControl</name>
@@ -416,51 +404,11 @@
             <ruleset>Migration Rules</ruleset>
         </rule>
         <rule>
-            <name>UseProperClassLoader</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>MDBAndSessionBeanNamingConvention</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>RemoteSessionInterfaceNamingConvention</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>LocalInterfaceSessionNamingConvention</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>LocalHomeNamingConvention</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>RemoteInterfaceNamingConvention</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>DoNotCallSystemExit</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>StaticEJBFieldShouldBeFinal</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
-            <name>DoNotUseThreads</name>
-            <ruleset>J2EE Rules</ruleset>
-        </rule>
-        <rule>
             <name>LocalVariableCouldBeFinal</name>
             <ruleset>Optimization Rules</ruleset>
         </rule>
         <rule>
             <name>MethodArgumentCouldBeFinal</name>
-            <ruleset>Optimization Rules</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidInstantiatingObjectsInLoops</name>
             <ruleset>Optimization Rules</ruleset>
         </rule>
         <rule>
@@ -645,7 +593,7 @@
         </rule>
         <rule>
             <name>LooseCoupling</name>
-            <ruleset>Coupling Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>DuplicateImports</name>
@@ -653,10 +601,6 @@
         </rule>
         <rule>
             <name>DontImportJavaLang</name>
-            <ruleset>Import Statement Rules</ruleset>
-        </rule>
-        <rule>
-            <name>UnusedImports</name>
             <ruleset>Import Statement Rules</ruleset>
         </rule>
         <rule>
@@ -708,30 +652,6 @@
             <ruleset>JUnit Rules</ruleset>
         </rule>
         <rule>
-            <name>UnnecessaryConstructor</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>NullAssignment</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>OnlyOneReturn</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>UnusedModifier</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>AssignmentInOperand</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>AtLeastOneConstructor</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
             <name>DontImportSun</name>
             <ruleset>Controversial Rules</ruleset>
         </rule>
@@ -748,15 +668,7 @@
             <ruleset>Controversial Rules</ruleset>
         </rule>
         <rule>
-            <name>DefaultPackage</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
             <name>BooleanInversion</name>
-            <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>DataflowAnomalyAnalysis</name>
             <ruleset>Controversial Rules</ruleset>
         </rule>
         <rule>
@@ -782,14 +694,6 @@
         <rule>
             <name>DoNotCallGarbageCollectionExplicitly</name>
             <ruleset>Controversial Rules</ruleset>
-        </rule>
-        <rule>
-            <name>ShortVariable</name>
-            <ruleset>Naming Rules</ruleset>
-        </rule>
-        <rule>
-            <name>LongVariable</name>
-            <ruleset>Naming Rules</ruleset>
         </rule>
         <rule>
             <name>ShortMethodName</name>
@@ -856,10 +760,6 @@
             <ruleset>Naming Rules</ruleset>
         </rule>
         <rule>
-            <name>NPathComplexity</name>
-            <ruleset>Code Size Rules</ruleset>
-        </rule>
-        <rule>
             <name>ExcessiveMethodLength</name>
             <ruleset>Code Size Rules</ruleset>
         </rule>
@@ -872,18 +772,6 @@
             <ruleset>Code Size Rules</ruleset>
         </rule>
         <rule>
-            <name>CyclomaticComplexity</name>
-            <ruleset>Code Size Rules</ruleset>
-        </rule>
-        <rule>
-            <name>ExcessivePublicCount</name>
-            <ruleset>Code Size Rules</ruleset>
-        </rule>
-        <rule>
-            <name>TooManyFields</name>
-            <ruleset>Code Size Rules</ruleset>
-        </rule>
-        <rule>
             <name>NcssMethodCount</name>
             <ruleset>Code Size Rules</ruleset>
         </rule>
@@ -893,10 +781,6 @@
         </rule>
         <rule>
             <name>NcssConstructorCount</name>
-            <ruleset>Code Size Rules</ruleset>
-        </rule>
-        <rule>
-            <name>TooManyMethods</name>
             <ruleset>Code Size Rules</ruleset>
         </rule>
         <rule>
@@ -932,10 +816,6 @@
             <ruleset>Jakarta Commons Logging Rules</ruleset>
         </rule>
         <rule>
-            <name>BeanMembersShouldSerialize</name>
-            <ruleset>JavaBean Rules</ruleset>
-        </rule>
-        <rule>
             <name>MissingSerialVersionUID</name>
             <ruleset>JavaBean Rules</ruleset>
         </rule>
@@ -949,7 +829,7 @@
         </rule>
         <rule>
             <name>CloneMethodMustImplementCloneable</name>
-            <ruleset>Clone Implementation Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
     </rules>
     <includeDerivedFiles>false</includeDerivedFiles>
