@@ -1,5 +1,5 @@
-#Mon, 03 Jan 2011 03:21:33 +0100
+#Mon, 03 Jan 2011 03:29:00 +0100
 #Sun Nov 28 23:37:37 CET 2010
 version.code=272
 
-current.version.code=1
+current.version.code=2
