@@ -162,6 +162,10 @@ Your Hudson.
     </target>
 
     <target name="update.all.files.from.template">
+        <mkdir dir="analysis"/>
+        <mkdir dir="build-libs"/>
+        <mkdir dir="cert"/>
+        <mkdir dir="template"/>
         <antcall target="download.file" ><param name="file" value="analysis/checkstyle.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="analysis/findbugs_exclude.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="analysis/pmd.xml"/></antcall>
@@ -171,7 +175,6 @@ Your Hudson.
         <antcall target="download.file" ><param name="file" value="cert/default.keyset"/></antcall>
         <antcall target="download.file" ><param name="file" value="template/ant.properties"/></antcall>
         <antcall target="download.file" ><param name="file" value="build_android_template.xml"/></antcall>
-        <antcall target="download.file" ><param name="file" value="build_android_manage_template.xml"/></antcall>
     </target>
 
 </project>
