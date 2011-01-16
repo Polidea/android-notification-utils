@@ -40,7 +40,7 @@
     <rule ref="rulesets/design.xml/AvoidProtectedFieldInFinalClass" />
     <rule ref="rulesets/design.xml/AssignmentToNonFinalStatic" />
     <rule ref="rulesets/design.xml/MissingStaticMethodInNonInstantiatableClass" />
-    <rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel" />
+    <!--  <rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel" /> -->
     <rule ref="rulesets/design.xml/MissingBreakInSwitch" />
     <rule ref="rulesets/design.xml/UseNotifyAllInsteadOfNotify" />
     <rule ref="rulesets/design.xml/AvoidInstanceofChecksInCatchClause" />

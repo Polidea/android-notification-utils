@@ -77,6 +77,11 @@
             <formatter type="xml" tofile="gen/checkstyle_report.xml" />
             <fileset dir="${source.dir}" includes="**/*.java" />
         </checkstyle>
+        <!-- get rid of checkstyle "Unable to get class information" error (bug in checkstyle!): -->
+        <replaceregexp file="gen/checkstyle_report.xml" flags="g">
+            <regexp pattern=".*error.*Unable to get class information.*\/.*"/>
+            <substitution expression=""/>
+        </replaceregexp>
         <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.home.id" />
         <pmd shortFilenames="false" targetjdk="1.6" rulesetfiles="analysis/pmd.xml">
             <formatter type="xml" toFile="gen/pmd_report.xml" />
