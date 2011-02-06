@@ -243,12 +243,19 @@ Your Jenkins.
         <mkdir dir="build-libs"/>
         <mkdir dir="cert"/>
         <mkdir dir="template"/>
+        <mkdir dir="release"/>
+        <mkdir dir="release/development"/>
+        <mkdir dir="release/stealth"/>
+        <mkdir dir="release/production"/>
         <antcall target="download.file" ><param name="file" value="analysis/checkstyle.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="analysis/findbugs_exclude.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="analysis/pmd.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="analysis/suppressions.xml"/></antcall>
         <antcall target="download.file" ><param name="file" value="build-libs/ant4hg-V0.07.jar"/></antcall>
         <antcall target="download.file" ><param name="file" value="build-libs/ant-contrib-1.0b3.jar"/></antcall>
+        <antcall target="download.file" ><param name="file" value="release/development/config.properties"/></antcall>
+        <antcall target="download.file" ><param name="file" value="release/stealth/config.properties"/></antcall>
+        <antcall target="download.file" ><param name="file" value="release/production/config.properties"/></antcall>
         <antcall target="download.file" ><param name="file" value="cert/debug.keystore"/></antcall>
         <antcall target="download.file" ><param name="file" value="cert/default.keyset"/></antcall>
         <antcall target="download.file" ><param name="file" value="template/ant.properties"/></antcall>
