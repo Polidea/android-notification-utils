@@ -1,9 +1,32 @@
-
-syntax: regexp
-^bin$
-syntax: regexp
-^gen$
 syntax: regexp
 ^local\.properties$
 syntax: regexp
+^bin$
+syntax: regexp
+^coverage$
+syntax: regexp
+^tmpcoverage$
+syntax: regexp
+^gen/junit$
+syntax: regexp
+^gen/.*\.xml$
+syntax: regexp
 ^javadoc$
+syntax: regexp
+^gen$
+syntax: regexp
+^outinstr$
+syntax: regexp
+^test/bin$
+syntax: regexp
+^res/raw/.*config.properties$
+syntax:glob
+test/local.properties
+local.properties
+test/coverage
+test/tmpcoverage
+test/bin
+syntax: regexp
+\.pyc$
+syntax: regexp
+^ota/.*$
