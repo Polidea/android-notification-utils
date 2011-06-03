@@ -34,16 +34,14 @@ public class LocationCenter {
      * Notified when provider is disabled.
      * 
      */
-    public static class LocationProviderDisabledNotification implements
-            Notification {
+    public static class LocationProviderDisabledNotification implements Notification {
     }
 
     /**
      * Notified when provider is enabled.
      * 
      */
-    public static class LocationProviderEnabledNotification implements
-            Notification {
+    public static class LocationProviderEnabledNotification implements Notification {
     }
 
     /**
@@ -66,6 +64,11 @@ public class LocationCenter {
 
         public Location getLocation() {
             return location;
+        }
+
+        @Override
+        public String toString() {
+            return "LocationChangedNotification: location = " + location;
         }
     }
 
@@ -102,8 +105,7 @@ public class LocationCenter {
         public void handleMessage(final Message msg) {
             if (lastLocationGPS == null && lastLocationNet == null) {
                 stopCollecting(SOURCETYPE_ANY);
-                notificationCenter.emitNotification(
-                        LocationTimeoutNotification.class,
+                notificationCenter.emitNotification(LocationTimeoutNotification.class,
                         new LocationTimeoutNotification());
             }
         }
@@ -122,8 +124,7 @@ public class LocationCenter {
             Log.i(TAG, "provider disabled(GPS)");
             gpsProviderEnabled = false;
             if (!networkProviderEnabled) {
-                notificationCenter.emitNotification(
-                        LocationProviderDisabledNotification.class,
+                notificationCenter.emitNotification(LocationProviderDisabledNotification.class,
                         new LocationProviderDisabledNotification());
             }
         }
@@ -132,16 +133,14 @@ public class LocationCenter {
         public void onProviderEnabled(final String provider) {
             Log.i(TAG, "provider enabled(GPS)");
             if (!gpsProviderEnabled && !networkProviderEnabled) {
-                notificationCenter.emitNotification(
-                        LocationProviderEnabledNotification.class,
+                notificationCenter.emitNotification(LocationProviderEnabledNotification.class,
                         new LocationProviderEnabledNotification());
             }
             gpsProviderEnabled = true;
         }
 
         @Override
-        public void onStatusChanged(final String provider, final int status,
-                final Bundle extras) {
+        public void onStatusChanged(final String provider, final int status, final Bundle extras) {
             // do nothing
         }
     };
@@ -159,8 +158,7 @@ public class LocationCenter {
             Log.i(TAG, "provider disabled(Net)");
             networkProviderEnabled = false;
             if (!gpsProviderEnabled) {
-                notificationCenter.emitNotification(
-                        LocationProviderDisabledNotification.class,
+                notificationCenter.emitNotification(LocationProviderDisabledNotification.class,
                         new LocationProviderDisabledNotification());
             }
         }
@@ -169,22 +167,19 @@ public class LocationCenter {
         public void onProviderEnabled(final String provider) {
             Log.i(TAG, "provider enabled(Net)");
             if (!gpsProviderEnabled && !networkProviderEnabled) {
-                notificationCenter.emitNotification(
-                        LocationProviderEnabledNotification.class,
+                notificationCenter.emitNotification(LocationProviderEnabledNotification.class,
                         new LocationProviderEnabledNotification());
             }
             networkProviderEnabled = true;
         }
 
         @Override
-        public void onStatusChanged(final String provider, final int status,
-                final Bundle extras) {
+        public void onStatusChanged(final String provider, final int status, final Bundle extras) {
             // do nothing
         }
     };
 
-    public LocationCenter(final Context context,
-            final NotificationCenter notificationCenter) {
+    public LocationCenter(final Context context, final NotificationCenter notificationCenter) {
         this.context = context;
         this.notificationCenter = notificationCenter;
     }
@@ -218,8 +213,7 @@ public class LocationCenter {
      * @return true if the type supported (or any supported in case ANY used)
      */
     public boolean isProviderSupported(final int type) {
-        final LocationManager mgr = (LocationManager) this.context
-                .getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager mgr = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
         final List<String> providers = mgr.getAllProviders();
         if (providers != null) {
             switch (type) {
@@ -246,8 +240,7 @@ public class LocationCenter {
      * @return true if the type is enabled (or any enabled in case ANY used)
      */
     public boolean isProviderEnabled(final int type) {
-        final LocationManager mgr = (LocationManager) this.context
-                .getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager mgr = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
         final List<String> providers = mgr.getProviders(true);
         if (providers != null) {
             switch (type) {
@@ -277,19 +270,15 @@ public class LocationCenter {
      * @param minDistance
      *            minimum distance between updates (hint)
      */
-    public void startCollecting(final int type, final long minTime,
-            final float minDistance) {
-        final LocationManager mgr = (LocationManager) this.context
-                .getSystemService(Context.LOCATION_SERVICE);
+    public void startCollecting(final int type, final long minTime, final float minDistance) {
+        final LocationManager mgr = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
         Log.i(TAG, "startCollecting: " + type);
         switch (type) {
         case SOURCETYPE_NET:
-            mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    minTime, minDistance, listenerNet);
+            mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, listenerNet);
             break;
         case SOURCETYPE_GPS:
-            mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
-                    minDistance, listenerGPS);
+            mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, listenerGPS);
             break;
         case SOURCETYPE_ANY:
             startCollectingAny(minTime, minDistance, mgr);
@@ -299,16 +288,12 @@ public class LocationCenter {
         }
     }
 
-    private void startCollectingAny(final long minTime,
-            final float minDistance, final LocationManager mgr) {
+    private void startCollectingAny(final long minTime, final float minDistance, final LocationManager mgr) {
         if (isProviderSupported(SOURCETYPE_NET)) {
-            mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    minTime, minDistance, listenerNet);
+            mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, listenerNet);
         }
         if (isProviderSupported(SOURCETYPE_GPS)) {
-            mgr.requestLocationUpdates(
-                    android.location.LocationManager.GPS_PROVIDER, minTime,
-                    minDistance, listenerGPS);
+            mgr.requestLocationUpdates(android.location.LocationManager.GPS_PROVIDER, minTime, minDistance, listenerGPS);
         }
     }
 
@@ -331,8 +316,7 @@ public class LocationCenter {
      */
     public void stopCollecting(final int type) {
         Log.i(TAG, "stopCollecting: " + type);
-        final LocationManager mgr = (LocationManager) this.context
-                .getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager mgr = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
         switch (type) {
         case SOURCETYPE_NET:
             mgr.removeUpdates(listenerNet);
@@ -406,13 +390,12 @@ public class LocationCenter {
     }
 
     private void emitLocationChange() {
-        notificationCenter.emitNotification(LocationChangedNotification.class,
-                new LocationChangedNotification(getBest()));
+        notificationCenter.emitNotification(LocationChangedNotification.class, new LocationChangedNotification(
+                getBest()));
     }
 
     public void setupTimeout(final int timeoutMs) {
-        timeoutHandler.sendEmptyMessageDelayed(LOCATION_UPDATE_TIMEOUT,
-                timeoutMs);
+        timeoutHandler.sendEmptyMessageDelayed(LOCATION_UPDATE_TIMEOUT, timeoutMs);
     }
 
 }

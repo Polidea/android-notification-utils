@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Handler;
+import android.util.Log;
 
 /**
  * Implements generic notifcation service. It has generic-ed processing of the
@@ -18,6 +19,7 @@ import android.os.Handler;
  * 
  */
 public class NotificationCenter {
+    private static final String TAG = NotificationCenter.class.getSimpleName();
     private final transient Handler handler;
 
     // NOTE: Here Object is needed. See Joshua Blosh's typesafe heterogeneous
@@ -43,17 +45,13 @@ public class NotificationCenter {
         if (list == null) {
             return Collections.emptyList();
         } else {
-            return Collections
-                    .unmodifiableList(new LinkedList<NotificationListener<T>>(
-                            list));
+            return Collections.unmodifiableList(new LinkedList<NotificationListener<T>>(list));
         }
     }
 
     @SuppressWarnings("unchecked")
-    private <T> List<NotificationListener<T>> internalGetListeners(
-            final Class<T> notificationType) {
-        final List<NotificationListener<T>> list = (List<NotificationListener<T>>) listenerMap
-                .get(notificationType);
+    private <T> List<NotificationListener<T>> internalGetListeners(final Class<T> notificationType) {
+        final List<NotificationListener<T>> list = (List<NotificationListener<T>>) listenerMap.get(notificationType);
         return list;
     }
 
@@ -70,11 +68,9 @@ public class NotificationCenter {
      *            listener to register
      */
     public synchronized <T extends Notification> // NOPMD
-    void registerListener(final Class<T> notificationType,
-            final NotificationListener<T> listener) {
+    void registerListener(final Class<T> notificationType, final NotificationListener<T> listener) {
         if (!listenerMap.containsKey(notificationType)) {
-            listenerMap.put(notificationType,
-                    new ArrayList<NotificationListener<T>>());
+            listenerMap.put(notificationType, new ArrayList<NotificationListener<T>>());
         }
         if (!internalGetListeners(notificationType).contains(listener)) {
             internalGetListeners(notificationType).add(listener);
@@ -94,8 +90,7 @@ public class NotificationCenter {
      *            listener to register
      */
     public synchronized <T extends Notification> // NOPMD
-    void unregisterListener(final Class<T> notificationType,
-            final NotificationListener<T> listener) {
+    void unregisterListener(final Class<T> notificationType, final NotificationListener<T> listener) {
         final List<NotificationListener<T>> list = internalGetListeners(notificationType);
         list.remove(listener);
     }
@@ -113,11 +108,16 @@ public class NotificationCenter {
      */
     public synchronized <T extends Notification> void emitNotification(// NOPMD
             final Class<T> clazz, final T notification) {
+        Log.d(TAG, "Emiting notification " + notification);
+        Throwable t = new Throwable();
+        Log.d(TAG, "Stack trace for emitting notification:", t);
         handler.post(new Runnable() {
             @Override
             public void run() {
                 for (final NotificationListener<T> listener : getListeners(clazz)) {
+                    Log.d(TAG, "Sending Notification " + notification + " to " + listener);
                     listener.notificationReceived(notification);
+                    Log.d(TAG, "Processe Notification " + notification + " by " + listener);
                 }
             }
         });
