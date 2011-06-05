@@ -46,15 +46,13 @@ public class OrientationCenter {
                 if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
                     if (!calibrationRequestEmited) {
                         calibrationRequestEmited = true;
-                        notificationCenter.emitNotification(
-                                OrientationAccuracyNotification.class,
+                        notificationCenter.emitNotification(OrientationAccuracyNotification.class,
                                 new OrientationAccuracyNotification(false));
                     }
                 } else {
                     if (calibrationRequestEmited) {
                         calibrationRequestEmited = false;
-                        notificationCenter.emitNotification(
-                                OrientationAccuracyNotification.class,
+                        notificationCenter.emitNotification(OrientationAccuracyNotification.class,
                                 new OrientationAccuracyNotification(true));
                     }
                 }
@@ -78,10 +76,8 @@ public class OrientationCenter {
             if (accelValues != null && geomagValues != null && loopReady) {
                 loopReady = false;
 
-                SensorManager.getRotationMatrix(devR, inclinationMatrix,
-                        accelValues, geomagValues);
-                SensorManager.remapCoordinateSystem(devR, SensorManager.AXIS_Z,
-                        SensorManager.AXIS_MINUS_X, camR);
+                SensorManager.getRotationMatrix(devR, inclinationMatrix, accelValues, geomagValues);
+                SensorManager.remapCoordinateSystem(devR, SensorManager.AXIS_Z, SensorManager.AXIS_MINUS_X, camR);
                 SensorManager.getOrientation(camR, lastOrientation);
 
                 // azimuth = discriminate(azimuth, lastOrientation[0]);
@@ -92,10 +88,8 @@ public class OrientationCenter {
                 change = pitch.push(lastOrientation[1]) || change;
                 change = roll.push(lastOrientation[2]) || change;
                 if (change) {
-                    notificationCenter.emitNotification(
-                            OrientationUpdateNotification.class,
-                            new OrientationUpdateNotification(getAzimuth(),
-                                    getPitch(), getRoll()));
+                    notificationCenter.emitNotification(OrientationUpdateNotification.class,
+                            new OrientationUpdateNotification(getAzimuth(), getPitch(), getRoll()));
                 }
             }
         }
@@ -111,10 +105,8 @@ public class OrientationCenter {
      * @param notificationCenter
      *            notification center used.
      */
-    public OrientationCenter(final Context context,
-            final NotificationCenter notificationCenter) {
-        sensorManager = (SensorManager) context
-                .getSystemService(Context.SENSOR_SERVICE);
+    public OrientationCenter(final Context context, final NotificationCenter notificationCenter) {
+        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         this.notificationCenter = notificationCenter;
     }
 
@@ -126,11 +118,9 @@ public class OrientationCenter {
         Log.d(TAG, "startCollecting");
         if (!sensorRegistered) {
             sensorManager.registerListener(orientationSensorlistener,
-                    sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                    SensorManager.SENSOR_DELAY_GAME);
+                    sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
             sensorManager.registerListener(orientationSensorlistener,
-                    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                    SensorManager.SENSOR_DELAY_GAME);
+                    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
             sensorRegistered = true;
             calibrationRequestEmited = false;
         }
@@ -177,8 +167,7 @@ public class OrientationCenter {
         private final float pitch;
         private final float roll;
 
-        public OrientationUpdateNotification(final float azimuth,
-                final float pitch, final float roll) {
+        public OrientationUpdateNotification(final float azimuth, final float pitch, final float roll) {
             this.azimuth = azimuth;
             this.pitch = pitch;
             this.roll = roll;
@@ -265,9 +254,7 @@ public class OrientationCenter {
         }
 
         private float function(final float arg) {
-            return arg
-                    * (float) (1 - Math.cos(clamp(arg, -highCap, highCap)
-                            / highCap * Math.PI)) / 2.0f * decay;
+            return arg * (float) (1 - Math.cos(clamp(arg, -highCap, highCap) / highCap * Math.PI)) / 2.0f * decay;
         }
 
         private float clamp(final float a, final float min, final float max) {

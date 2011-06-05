@@ -109,7 +109,7 @@ public class NotificationCenter {
     public synchronized <T extends Notification> void emitNotification(// NOPMD
             final Class<T> clazz, final T notification) {
         Log.d(TAG, "Emiting notification " + notification);
-        Throwable t = new Throwable();
+        final Throwable t = new Throwable();
         Log.d(TAG, "Stack trace for emitting notification:", t);
         handler.post(new Runnable() {
             @Override
