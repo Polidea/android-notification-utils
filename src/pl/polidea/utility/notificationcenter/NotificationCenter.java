@@ -51,8 +51,7 @@ public class NotificationCenter {
 
     @SuppressWarnings("unchecked")
     private <T> List<NotificationListener<T>> internalGetListeners(final Class<T> notificationType) {
-        final List<NotificationListener<T>> list = (List<NotificationListener<T>>) listenerMap.get(notificationType);
-        return list;
+        return (List<NotificationListener<T>>) listenerMap.get(notificationType);
     }
 
     /**
@@ -109,7 +108,7 @@ public class NotificationCenter {
     public synchronized <T extends Notification> void emitNotification(// NOPMD
             final Class<T> clazz, final T notification) {
         Log.d(TAG, "Emiting notification " + notification);
-        final Throwable t = new Throwable();
+        final Throwable t = new Throwable(); // NOPMD
         Log.d(TAG, "Stack trace for emitting notification:", t);
         handler.post(new Runnable() {
             @Override
