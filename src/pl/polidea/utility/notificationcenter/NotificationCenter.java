@@ -107,16 +107,16 @@ public class NotificationCenter {
      */
     public synchronized <T extends Notification> void emitNotification(// NOPMD
             final Class<T> clazz, final T notification) {
-        Log.d(TAG, "Emiting notification " + notification);
+       // Log.d(TAG, "Emiting notification " + notification);
         final Throwable t = new Throwable(); // NOPMD
-        Log.d(TAG, "Stack trace for emitting notification:", t);
+       // Log.d(TAG, "Stack trace for emitting notification:", t);
         handler.post(new Runnable() {
             @Override
             public void run() {
                 for (final NotificationListener<T> listener : getListeners(clazz)) {
-                    Log.d(TAG, "Sending Notification " + notification + " to " + listener);
+                  // Log.d(TAG, "Sending Notification " + notification + " to " + listener);
                     listener.notificationReceived(notification);
-                    Log.d(TAG, "Processe Notification " + notification + " by " + listener);
+                  // Log.d(TAG, "Processe Notification " + notification + " by " + listener);
                 }
             }
         });
