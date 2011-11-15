@@ -1,5 +1,0 @@
-#Sun, 17 Apr 2011 23:15:52 +0200
-#Sun Nov 28 23:37:37 CET 2010
-version.code=272
-
-current.version.code=12

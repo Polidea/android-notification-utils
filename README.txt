@@ -29,14 +29,11 @@ Building :
 
 I. Building from ANT
 
-	1. Download the dependent libraries into directory containg the project (you can also run ant -f build_android_manage_template.xml checkout_libraries)
-	2. Copy ant.properties from template to local.properties in main directory, and edit appropriate paths ( sdk.dir is required )
-	3. Run build task (default) from build.xml
+       android update project -p . 
+       ant
 
 II. Building from Eclipse
 
-	1. Download the dependent libraries (you can also run ant -f build_android_manage_template.xml checkout_libraries)
-	2. Add ant.properties to "global property files in eclipse" or copy it to local.properties, edit appropriate paths ( sdk.dir is required )
 	3. Install Eclipse IDE, and ADT Android plugin (http://developer.android.com/sdk/eclipse-adt.html#installing)
 	4. Configure Android SDK in Eclipse IDE
 	5. Download SDK Platform 8 in Android SDK Manager (Eclipse->Window->Android SDK and AVD manager)
