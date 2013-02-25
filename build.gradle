@@ -26,6 +26,6 @@ apply from: 'http://dev.polidea.pl/ext/Ameba/polidea_conventions.gradle'
 
 task printProps() << {
 	println "Jenkins url: ${System.getenv()['JENKINS_URL']}"
-	println "Jenkins job: ${System.getenv()['JENKINS_JOB']}"
+	println "Jenkins job: ${System.getenv()['JOB_URL']}"
 	println "Jenkins workspace: ${System.getenv()['WORKSPACE']}"
 }
