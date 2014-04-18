@@ -1,5 +1,5 @@
-mall utilities connected with notifications that Polidea (http://www.polidea.com/) is using in order to simplify handling notifications for android. 
-They are inspired by iPhone notification system. 
+Small utility that Polidea (http://www.polidea.com/) uses in order to simplify handling notifications for android. 
+It is inspired by iPhone notification system. 
 
 The notifications are NOT aiming to replace android's broadcasts. 
 They are mostly used in order to provide in-application notifications with typesafe notification arguments, 
