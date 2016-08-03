@@ -1,3 +1,9 @@
+---
+
+__This repository is no longer maintained. Issue reports and pull requests will not be attended.__
+
+---
+
 **Introduction**
 
 The android-notification-utils is a set of tools that solve a very common data distribution problem known as the producer-consumer model. The basic question is: how to distribute some data from it's source(the producer) to the components interested in it(the consumers). This is solved commonly in Java using the Listener pattern, where the consumers register directly by the producer to get the data. In means of Object Oriented Programing, this has some major drawbacks:
